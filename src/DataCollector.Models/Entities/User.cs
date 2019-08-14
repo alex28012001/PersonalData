@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace DataCollector.Models.Entities
 {
@@ -7,6 +8,11 @@ namespace DataCollector.Models.Entities
     /// </summary>
     public class User
     {
+        /// <summary>
+        /// The contains record identificator for mongoDb.
+        /// </summary>
+        public ObjectId Id { get; set; }
+
         /// <summary>
         /// The contains common information.
         /// </summary>
