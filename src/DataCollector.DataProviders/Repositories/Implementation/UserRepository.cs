@@ -6,6 +6,9 @@ using MongoDB.Driver;
 
 namespace DataCollector.DataProviders.Repositories.Implementation
 {
+    /// <summary>
+    /// The class provides work with user entity.
+    /// </summary>
     public class UserRepository : BaseRepository, IUserRepository
     {
         public UserRepository(string connectionString)
@@ -13,6 +16,7 @@ namespace DataCollector.DataProviders.Repositories.Implementation
         {
         }
 
+        ///<inheritdoc />
         public async Task BulkInsertAsync(IEnumerable<User> users)
         {
             var bulkCollection = new List<WriteModel<User>>();
