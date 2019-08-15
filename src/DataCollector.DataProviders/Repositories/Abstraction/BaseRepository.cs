@@ -2,6 +2,9 @@
 
 namespace DataCollector.DataProviders.Repositories.Abstraction
 {
+    /// <summary>
+    /// The class provides base state and functionality for repositories.
+    /// </summary>
     public abstract class BaseRepository
     {
         protected readonly IDbContext _db;
