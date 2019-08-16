@@ -10,7 +10,7 @@ namespace DataCollector.Models.Entities
         /// <summary>
         /// Contains the liked types of books.
         /// </summary>
-        public IEnumerable<string> TypeOfBooks { get; set; }
+        public IEnumerable<string> TypesOfBooks { get; set; }
 
         /// <summary>
         /// Contains the liked types of films.
@@ -20,7 +20,7 @@ namespace DataCollector.Models.Entities
         /// <summary>
         /// Contains the liked types of games.
         /// </summary>
-        public IEnumerable<string> TypeOfGames { get; set; }
+        public IEnumerable<string> TypesOfGames { get; set; }
 
         /// <summary>
         /// Contains the liked types of music.

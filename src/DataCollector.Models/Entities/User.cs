@@ -9,37 +9,42 @@ namespace DataCollector.Models.Entities
     public class User
     {
         /// <summary>
-        /// The contains record identificator for mongoDb.
+        /// Contains record identificator for mongoDb.
         /// </summary>
         public ObjectId Id { get; set; }
 
         /// <summary>
-        /// The contains common information.
+        /// Contains common information.
         /// </summary>
         public CommonInfo CommonInfo { get; set; }
 
         /// <summary>
-        /// The contains contacts.
+        /// Contains contacts.
         /// </summary>
         public Contacts Contacts { get; set; }
 
         /// <summary>
-        /// The contains info about education.
+        /// Contains info about education.
         /// </summary>
         public IEnumerable<Education> Education { get; set; }
 
         /// <summary>
-        /// The contains info about career.
+        /// Contains info about career.
         /// </summary>
         public IEnumerable<Сareer> Сareer { get; set; }
 
         /// <summary>
-        /// The contains info about life positions.
+        /// Contains info about life positions.
         /// </summary>
         public LifePositions LifePositions { get; set; }
 
         /// <summary>
-        /// The contains info about interests.
+        /// Contains user activities.
+        /// </summary>
+        public Activities Activities { get; set; }
+
+        /// <summary>
+        /// Contains info about interests.
         /// </summary>
         public Interests Interests { get; set; }
     }
