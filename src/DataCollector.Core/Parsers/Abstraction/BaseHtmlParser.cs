@@ -1,4 +1,5 @@
-﻿using DataCollector.Core.Providers;
+﻿using System;
+using DataCollector.Core.Providers;
 using DataCollector.Models.Entities;
 using System.Collections.Generic;
 
@@ -16,11 +17,17 @@ namespace DataCollector.Core.Parsers.Abstraction
         /// <returns>The user entity.</returns>
         public User CreateUser(string html)
         {
+            if(html == null)
+            {
+                 throw new ArgumentNullException(nameof(html));
+            }
+
             var commonInfo = ParseCommonInfo(html);
             var contacts = ParseContacts(html);
             var career = ParseCareer(html);
             var education = ParseEducation(html);
             var lifePositions = ParseLifePositions(html);
+            var activities = ParseActivities(html);
 
             var user = new User()
             {
@@ -28,7 +35,8 @@ namespace DataCollector.Core.Parsers.Abstraction
                 Contacts = contacts,
                 Сareer = career,
                 Education = education,
-                LifePositions = lifePositions
+                LifePositions = lifePositions,
+                Activities = activities
             };
 
             return user;
@@ -43,5 +51,7 @@ namespace DataCollector.Core.Parsers.Abstraction
         protected abstract IEnumerable<Education> ParseEducation(string html);
    
         protected abstract LifePositions ParseLifePositions(string html);
+
+        protected abstract Activities ParseActivities(string html);
     }
 }
