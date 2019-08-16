@@ -8,19 +8,19 @@ namespace DataCollector.Models.Entities
     public class Interests
     {
         /// <summary>
-        /// Contains the liked books.
+        /// Contains the liked types of books.
         /// </summary>
-        public IEnumerable<string> Books { get; set; }
+        public IEnumerable<string> TypeOfBooks { get; set; }
 
         /// <summary>
-        /// Contains the liked films.
+        /// Contains the liked types of films.
         /// </summary>
-        public IEnumerable<string> Films { get; set; }
+        public IEnumerable<string> TypesOfFilms { get; set; }
 
         /// <summary>
-        /// Contains the liked games.
+        /// Contains the liked types of games.
         /// </summary>
-        public IEnumerable<string> Games { get; set; }
+        public IEnumerable<string> TypeOfGames { get; set; }
 
         /// <summary>
         /// Contains the liked types of music.
