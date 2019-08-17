@@ -1,19 +1,23 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using DataCollector.Common.Helpers;
-using DataCollector.Core.UrlGenerator.Abstraction;
+using DataCollector.Core.SourcesGenerator.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DataCollector.Core.UrlGenerator.Implementation
+namespace DataCollector.Core.SourcesGenerator.Implementation
 {
     /// <summary>
     /// The class provides generating urls.
     /// </summary>
-    public class FreelanceUrlReader : IUrlGenerator
+    public class FreelanceUrlReader : ISourcesGenerator
     {
-        ///<inheritdoc />
+        /// <summary>
+        /// Generate urls by template.
+        /// </summary>
+        /// <param name="urlTemplate">The web site url template.</param>
+        /// <returns>The collection of urls.</returns>
         public async Task<IEnumerable<string>> GenerateAsync(string urlTemplate)
         {
             if(urlTemplate == null)
