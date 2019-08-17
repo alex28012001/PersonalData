@@ -1,7 +1,7 @@
 ﻿using DataCollector.Core.Providers;
-using DataCollector.Core.UrlGenerator.Abstraction;
+using DataCollector.Core.SourcesGenerator.Abstraction;
 
-namespace DataCollector.Core.UserBuilders.Abstraction
+namespace DataCollector.Core.ComponentFactories.Abstraction
 {
     /// <summary>
     /// The interface provides creating components for creating user entity.
@@ -11,8 +11,8 @@ namespace DataCollector.Core.UserBuilders.Abstraction
         /// <summary>
         /// Create url generator.
         /// </summary>
-        /// <returns>The implementation of IUrlGenerator interface.</returns>
-        IUrlGenerator CreateUrlGenerator();
+        /// <returns>The implementation of ISourcesGenerator interface.</returns>
+        ISourcesGenerator CreateSourcesGenerator();
 
         /// <summary>
         /// Create User provider.

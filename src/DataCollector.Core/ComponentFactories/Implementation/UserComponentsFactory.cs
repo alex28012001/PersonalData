@@ -1,4 +1,4 @@
-﻿using DataCollector.Core.UserBuilders.Abstraction;
+﻿using DataCollector.Core.ComponentFactories.Abstraction;
 using System;
 
 namespace DataCollector.Core.UserBuilders.Implementation
