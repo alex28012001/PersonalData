@@ -38,14 +38,13 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
             var urls = new List<string>();
             var parser = new HtmlParser();
 
-            IHtmlCollection<IElement> htmlElements = null;
-
             //32 - count items with user data on 1 page web site freelance.ru
             var countItemsOnPage = 32;
             var skipedPages = (int)Math.Floor((double)skip / countItemsOnPage);
             var skipedItems = skip - skipedPages * countItemsOnPage;
 
             var page = ++skipedPages;
+            IHtmlCollection<IElement> htmlElements = null;
 
             do
             {
@@ -58,12 +57,16 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
                 for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
                     var href = htmlElements[i].GetAttribute("href");
-                    urls.Add(href);
+
+                    if(urls.Count < count)
+                    {
+                        urls.Add(href);
+                    } 
                 }
 
                 page++;
             }
-            while (htmlElements.Length > 0);
+            while (htmlElements.Length > 0 && urls.Count < count);
 
             return urls;
         }
