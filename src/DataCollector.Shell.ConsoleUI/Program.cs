@@ -1,5 +1,5 @@
-﻿using DataCollector.Core.Services.Abstraction;
-using DataCollector.Core.Services.Implementation;
+﻿using DataCollector.Core.Ioc;
+using DataCollector.Core.Services.Abstraction;
 using DataCollector.Core.Settings;
 using DataCollector.DataProviders.Repositories.Abstraction;
 using DataCollector.DataProviders.Repositories.Implementation;
@@ -15,6 +15,11 @@ namespace DataCollector.Shell.ConsoleUI
         {
             var serviceollection = new ServiceCollection();
             ConfigureServices(serviceollection);
+
+            var serviceProvider = serviceollection.BuildServiceProvider();
+
+            var userService = serviceProvider.GetService<IUserService>();
+            userService.GeneratingUsersAsync().GetAwaiter().GetResult();
         }
 
         public static void ConfigureServices(IServiceCollection serviceCollection)
@@ -25,8 +30,12 @@ namespace DataCollector.Shell.ConsoleUI
                .Build();
 
             serviceCollection.AddOptions();
-           
             serviceCollection.Configure<SourcesConfig>(configuration.GetSection("SourcesConfig"));
+
+            var connectionString = configuration.GetConnectionString("MongoDbConnection");
+            serviceCollection.AddScoped<IUserRepository>(p => new UserRepository(connectionString));
+
+            serviceCollection.AddCoreServices();
         }
     }
 }
