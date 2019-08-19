@@ -5,7 +5,7 @@ using DataCollector.DataProviders.Repositories.Abstraction;
 using DataCollector.DataProviders.Repositories.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
+using System;
 
 namespace DataCollector.Shell.ConsoleUI
 {
@@ -15,28 +15,18 @@ namespace DataCollector.Shell.ConsoleUI
         {
             var serviceollection = new ServiceCollection();
             ConfigureServices(serviceollection);
-
-            var serviceProvider = serviceollection.BuildServiceProvider();
-
-            var userService = serviceProvider.GetService<IUserService>();
-            userService.GeneratingUsersAsync().Wait();
         }
 
         public static void ConfigureServices(IServiceCollection serviceCollection)
         {
             var configuration = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile(@"C:\Users\star4\Documents\DataCollector\src\DataCollector.Shell.ConsoleUI\appsettings.json")
+               .SetBasePath(Environment.CurrentDirectory)
+               .AddJsonFile("appsettings.json")
                .Build();
-
-            var connectionString = configuration.GetConnectionString("MongoDbConnection");
 
             serviceCollection.AddOptions();
            
             serviceCollection.Configure<SourcesConfig>(configuration.GetSection("SourcesConfig"));
-
-            serviceCollection.AddScoped<IUserRepository>(p => new UserRepository(connectionString));
-            serviceCollection.AddScoped<IUserService, UserService>();
         }
     }
 }
