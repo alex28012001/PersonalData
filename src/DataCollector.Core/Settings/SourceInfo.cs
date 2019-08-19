@@ -1,9 +1,9 @@
-﻿namespace DataCollector.Core.Models
+﻿namespace DataCollector.Core.Settings
 {
     /// <summary>
-    /// The class contains information about source data.
+    /// The class contains information about source.
     /// </summary>
-    public class SourceData
+    public class SourceInfo
     {
         /// <summary>
         /// Contains title.

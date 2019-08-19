@@ -2,6 +2,8 @@
 using DataCollector.Core.Providers;
 using DataCollector.Models.Entities;
 using System.Collections.Generic;
+using DataCollector.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace DataCollector.Core.Parsers.Abstraction
 {
@@ -13,14 +15,16 @@ namespace DataCollector.Core.Parsers.Abstraction
         /// <summary>
         /// Create user entity by html.
         /// </summary>
-        /// <param name="html">The html.</param>
+        /// <param name="url">The web site url.</param>
         /// <returns>The user entity.</returns>
-        public User CreateUser(string html)
+        public async Task<User> CreateUserAsync(string url)
         {
-            if(html == null)
+            if(url == null)
             {
-                 throw new ArgumentNullException(nameof(html));
+                 throw new ArgumentNullException(nameof(url));
             }
+
+            var html = await HtmlReader.ReadAsync(url);
 
             var commonInfo = ParseCommonInfo(html);
             var contacts = ParseContacts(html);

@@ -1,22 +1,19 @@
 ﻿using System;
 using DataCollector.Models.Entities;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using DataCollector.Core.Models;
 
 namespace DataCollector.Core.Services.Abstraction
 {
     /// <summary>
-    /// The interface contains logic of generating users by sources info.
+    /// The interface contains logic of generating users.
     /// </summary>
     public interface IUserService
     {
         /// <summary>
-        /// Generating users by sources info.
+        /// Generating users by sources configuration.
         /// </summary>
-        /// <param name="sourcesInfo">The source title and him template.</param>
         /// <returns>The task.</returns>
-        Task GeneratingUsersAsync(IEnumerable<SourceData> sourcesInfo);
+        Task GeneratingUsersAsync();
 
         /// <summary>
         /// The event, which called when user generated.

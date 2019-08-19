@@ -1,4 +1,5 @@
 ﻿using DataCollector.Models.Entities;
+using System.Threading.Tasks;
 
 namespace DataCollector.Core.Providers
 {
@@ -12,6 +13,6 @@ namespace DataCollector.Core.Providers
         /// </summary>
         /// <param name="data">The data, which needed for creating user entity.</param>
         /// <returns>The user entity.</returns>
-        User CreateUser(string data);
+        Task<User> CreateUserAsync(string data);
     }
 }

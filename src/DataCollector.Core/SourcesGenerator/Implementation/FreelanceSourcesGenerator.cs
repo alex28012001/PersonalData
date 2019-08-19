@@ -18,18 +18,33 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
         /// </summary>
         /// <param name="urlTemplate">The web site url template.</param>
         /// <returns>The collection of urls.</returns>
-        public async Task<IEnumerable<string>> GenerateAsync(string urlTemplate)
+        public async Task<IEnumerable<string>> GenerateAsync(string urlTemplate, int count, int skip = 0)
         {
-            if(urlTemplate == null)
+            if (urlTemplate == null) 
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(urlTemplate));
+            }
+
+            if (count < 0) 
+            {
+                throw new ArgumentException("Count sources cannot be less 0", nameof(count));
+            }
+
+            if (skip < 0)
+            {
+                throw new ArgumentException("Skiped sources cannot be less 0", nameof(skip));
             }
 
             var urls = new List<string>();
             var parser = new HtmlParser();
 
+            //32 - count items with user data on 1 page web site freelance.ru
+            var countItemsOnPage = 32;
+            var skipedPages = (int)Math.Floor((double)skip / countItemsOnPage);
+            var skipedItems = skip - skipedPages * countItemsOnPage;
+
+            var page = ++skipedPages;
             IHtmlCollection<IElement> htmlElements = null;
-            var page = 1;
 
             do
             {
@@ -39,14 +54,19 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
 
                 htmlElements = document.QuerySelectorAll(".userinfo_small .avatar a");
 
-                foreach (var tag in htmlElements)
+                for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
-                    urls.Add(tag.GetAttribute("href"));
+                    var href = htmlElements[i].GetAttribute("href");
+
+                    if(urls.Count < count)
+                    {
+                        urls.Add(href);
+                    } 
                 }
 
                 page++;
             }
-            while (htmlElements.Length > 0);
+            while (htmlElements.Length > 0 && urls.Count < count);
 
             return urls;
         }

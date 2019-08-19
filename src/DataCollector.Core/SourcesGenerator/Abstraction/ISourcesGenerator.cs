@@ -13,6 +13,6 @@ namespace DataCollector.Core.SourcesGenerator.Abstraction
         /// </summary>
         /// <param name="template">The template source.</param>
         /// <returns>The collection of sources.</returns>
-        Task<IEnumerable<string>> GenerateAsync(string template);
+        Task<IEnumerable<string>> GenerateAsync(string template, int amount, int skip = 0);
     }
 }
