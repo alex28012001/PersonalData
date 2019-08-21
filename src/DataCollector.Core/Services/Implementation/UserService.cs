@@ -67,7 +67,7 @@ namespace DataCollector.Core.Services.Implementation
                     foreach (var source in sources)
                     {
                         var user = await userProvider.CreateUserAsync(source);
-                        user.Interests = _interestsGenerator.GenerateInterests(user.Activities);
+                        user.Interests = await _interestsGenerator.GenerateInterestsAsync(user.Activities);
 
                         GeneratedUser?.Invoke(user);
                         users.Add(user);

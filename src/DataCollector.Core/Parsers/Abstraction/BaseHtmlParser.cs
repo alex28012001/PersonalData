@@ -24,7 +24,7 @@ namespace DataCollector.Core.Parsers.Abstraction
                  throw new ArgumentNullException(nameof(url));
             }
 
-            var html = await HtmlReader.ReadAsync(url);
+            var html = await HttpReader.ReadAsync(url);
 
             var commonInfo = ParseCommonInfo(html);
             var contacts = ParseContacts(html);

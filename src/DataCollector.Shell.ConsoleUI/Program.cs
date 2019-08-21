@@ -31,6 +31,7 @@ namespace DataCollector.Shell.ConsoleUI
 
             serviceCollection.AddOptions();
             serviceCollection.Configure<SourcesConfig>(configuration.GetSection("SourcesConfig"));
+            serviceCollection.Configure<InterestsGeneratorConstansts>(configuration.GetSection("InterestsGeneratorConstansts"));
 
             var connectionString = configuration.GetConnectionString("MongoDbConnection");
             serviceCollection.AddScoped<IUserRepository>(p => new UserRepository(connectionString));

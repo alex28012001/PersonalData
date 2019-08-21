@@ -49,7 +49,7 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
             do
             {
                 var url = string.Format(urlTemplate, page);
-                var pageHtml = await HtmlReader.ReadAsync(url);
+                var pageHtml = await HttpReader.ReadAsync(url);
                 var document = parser.ParseDocument(pageHtml);
 
                 htmlElements = document.QuerySelectorAll(".userinfo_small .avatar a");

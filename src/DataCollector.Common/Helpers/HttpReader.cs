@@ -8,13 +8,13 @@ namespace DataCollector.Common.Helpers
     /// <summary>
     /// The class provides reading urls.
     /// </summary>
-    public static class HtmlReader 
+    public static class HttpReader
     {
         /// <summary>
-        /// Read html by urls and returned him.
+        /// Read http response content by urls and returned him.
         /// </summary>
         /// <param name="urls">The web site urls.</param>
-        /// <returns>The collection of html.</returns>
+        /// <returns>The collection of http content.</returns>
         public static async Task<IEnumerable<string>> ReadAsync(string[] urls)
         {
             if(urls == null)
@@ -22,23 +22,23 @@ namespace DataCollector.Common.Helpers
                 throw new ArgumentNullException(nameof(urls));
             }
 
-            var htmlPages = new List<string>();
+            var contents = new List<string>();
             var httpClient = new HttpClient();
 
             foreach (var url in urls)
             {
-                var htmlPage = await httpClient.GetStringAsync(url);
-                htmlPages.Add(htmlPage);
+                var content = await httpClient.GetStringAsync(url);
+                contents.Add(content);
             }
 
-            return htmlPages;
+            return contents;
         }
 
         /// <summary>
-        /// Read html by urls and returned him.
+        /// Read http response content by url and returned him.
         /// </summary>
         /// <param name="urls">The web site url.</param>
-        /// <returns>The html.</returns>
+        /// <returns>The http content.</returns>
         public static async Task<string> ReadAsync(string url)
         {
             if (url == null)

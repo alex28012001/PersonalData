@@ -1,4 +1,5 @@
 ﻿using DataCollector.Models.Entities;
+using System.Threading.Tasks;
 
 namespace DataCollector.Core.InterestsGenerator.Abstraction
 {
@@ -12,6 +13,6 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
         /// </summary>
         /// <param name="activities">The favorite user activities.</param>
         /// <returns>The interests.</returns>
-        Interests GenerateInterests(Activities activities);       
+        Task<Interests> GenerateInterestsAsync(Activities activities);       
     }
 }
