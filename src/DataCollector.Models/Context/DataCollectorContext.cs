@@ -25,7 +25,7 @@ namespace DataCollector.Models.Context
             var client = new MongoClient(connectionString);
             var connection = new MongoUrlBuilder(connectionString);
             
-            _db = client.GetDatabase(connection.DatabaseName);
+            _db = client.GetDatabase(connection.DatabaseName);            
         }
 
         /// <summary>
@@ -36,6 +36,17 @@ namespace DataCollector.Models.Context
             get
             {
                 return _db.GetCollection<User>("Users");
+            }
+        }
+
+        /// <summary>
+        /// Contains list of city entity.
+        /// </summary>
+        public IMongoCollection<City> Cities
+        {
+            get
+            {
+                return _db.GetCollection<City>("Cities");
             }
         }
     }

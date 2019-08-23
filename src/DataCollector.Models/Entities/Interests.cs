@@ -26,10 +26,5 @@ namespace DataCollector.Models.Entities
         /// Contains the liked types of music.
         /// </summary>
         public IEnumerable<string> TypesOfMusic { get; set; }
-
-        /// <summary>
-        /// Contains the hobbies.
-        /// </summary>
-        public IEnumerable<string> Hobbies { get; set; }
     }
 }

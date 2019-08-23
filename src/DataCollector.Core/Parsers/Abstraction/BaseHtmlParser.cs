@@ -26,36 +26,38 @@ namespace DataCollector.Core.Parsers.Abstraction
 
             var html = await HttpReader.ReadAsync(url);
 
-            var commonInfo = ParseCommonInfo(html);
-            var contacts = ParseContacts(html);
-            var career = ParseCareer(html);
-            var education = ParseEducation(html);
-            var lifePositions = ParseLifePositions(html);
-            var activities = ParseActivities(html);
+            var commonInfoTask = ParseCommonInfoAsync(html);
+            var contactsTask = ParseContactsAsync(html);
+            var careerTask = ParseCareerAsync(html);
+            var educationTask = ParseEducationAsync(html);
+            var lifePositionTask = ParseLifePositionAsync(html);
+            var activitiesTask = ParseActivitiesAsync(html);
+
+            await Task.WhenAll(commonInfoTask, contactsTask, careerTask, educationTask, lifePositionTask, activitiesTask);
 
             var user = new User()
             {
-                CommonInfo = commonInfo,
-                Contacts = contacts,
-                Сareer = career,
-                Education = education,
-                LifePositions = lifePositions,
-                Activities = activities
+                CommonInfo = commonInfoTask.Result,
+                Contacts = contactsTask.Result,
+                Сareer = careerTask.Result,
+                Education = educationTask.Result,
+                LifePositions = lifePositionTask.Result,
+                Activities = activitiesTask.Result
             };
 
             return user;
         }
 
-        protected abstract CommonInfo ParseCommonInfo(string html);
+        protected abstract Task<CommonInfo> ParseCommonInfoAsync(string html);
 
-        protected abstract Contacts ParseContacts(string html);
+        protected abstract Task<Contacts> ParseContactsAsync(string html);
 
-        protected abstract IEnumerable<Сareer> ParseCareer(string html);
+        protected abstract Task<IEnumerable<Сareer>> ParseCareerAsync(string html);
 
-        protected abstract IEnumerable<Education> ParseEducation(string html);
+        protected abstract Task<IEnumerable<Education>> ParseEducationAsync(string html);
    
-        protected abstract LifePositions ParseLifePositions(string html);
+        protected abstract Task<LifePositions> ParseLifePositionAsync(string html);
 
-        protected abstract Activities ParseActivities(string html);
+        protected abstract Task<Activities> ParseActivitiesAsync(string html);
     }
 }

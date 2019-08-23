@@ -11,7 +11,7 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
     /// <summary>
     /// The class provides generating urls.
     /// </summary>
-    public class FreelanceUrlReader : ISourcesGenerator
+    public class FreelanceSourcesGenerator : ISourcesGenerator
     {
         /// <summary>
         /// Generate urls by template.
@@ -48,20 +48,21 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
 
             do
             {
-                var url = string.Format(urlTemplate, page);
-                var pageHtml = await HttpReader.ReadAsync(url);
+                var pageUrl = string.Format(urlTemplate, page);
+                var pageHtml = await HttpReader.ReadAsync(pageUrl);
                 var document = parser.ParseDocument(pageHtml);
 
-                htmlElements = document.QuerySelectorAll(".userinfo_small .avatar a");
+                htmlElements = document.QuerySelectorAll(".user_info .name a");
 
                 for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
                     var href = htmlElements[i].GetAttribute("href");
+                    var userUrl = $"https://freelance.ru/{href}";
 
-                    if(urls.Count < count)
+                    if (urls.Count < count)
                     {
-                        urls.Add(href);
-                    } 
+                        urls.Add(userUrl);
+                    }
                 }
 
                 page++;

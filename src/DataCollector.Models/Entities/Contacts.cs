@@ -11,13 +11,29 @@
         public string MobilePhone { get; set; }
 
         /// <summary>
+        /// Contains the email.
+        /// </summary>
+        public string Email { get; set; } 
+        
+        /// <summary>
         /// Contains the skype.
         /// </summary>
         public string Skype { get; set; }
 
         /// <summary>
-        /// Contains the email.
+        /// Contains the vk.
         /// </summary>
-        public string Email { get; set; }
+        public string Vk { get; set; }
+
+        /// <summary>
+        /// Contains the facebook.
+        /// </summary>
+        public string Facebook { get; set; }
+
+        /// <summary>
+        /// Contains the instagram.
+        /// </summary>
+        public string Instagram { get; set; }
     }
 }
+
