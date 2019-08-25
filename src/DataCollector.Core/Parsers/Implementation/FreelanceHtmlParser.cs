@@ -8,6 +8,10 @@ using DataCollector.Common.Helpers;
 
 namespace DataCollector.Core.Parsers.Implementation
 {
+    /// <summary>
+    /// The class contains logic of parsing html to User entity.
+    /// For Freelance.ru sources.
+    /// </summary>
     public class FreelanceHtmlParser : BaseHtmlParser
     {
         protected override async Task<CommonInfo> ParseCommonInfoAsync(string html)
