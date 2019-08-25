@@ -4,6 +4,7 @@ using DataCollector.Common.Helpers;
 using DataCollector.Core.SourcesGenerator.Abstraction;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace DataCollector.Core.SourcesGenerator.Implementation
@@ -34,6 +35,11 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
             {
                 throw new ArgumentException("Skiped sources cannot be less 0", nameof(skip));
             }
+       
+            var httpHandler = new HttpClientHandler();
+            httpHandler.Proxy = null;
+            httpHandler.UseProxy = false;
+            var httpClient = new HttpClient(httpHandler);
 
             var urls = new List<string>();
             var parser = new HtmlParser();
@@ -51,15 +57,15 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
                 var pageUrl = string.Format(urlTemplate, page);
                 var pageHtml = await HttpReader.ReadAsync(pageUrl);
                 var document = parser.ParseDocument(pageHtml);
-
                 htmlElements = document.QuerySelectorAll(".user_info .name a");
 
                 for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
                     var href = htmlElements[i].GetAttribute("href");
                     var userUrl = $"https://freelance.ru/{href}";
+                    var urlIsCorrect = await UrlIsCorrectAsync(userUrl, httpClient);
 
-                    if (urls.Count < count)
+                    if (urlIsCorrect && urls.Count < count)
                     {
                         urls.Add(userUrl);
                     }
@@ -70,6 +76,17 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
             while (htmlElements.Length > 0 && urls.Count < count);
 
             return urls;
+        }
+
+        private async Task<bool> UrlIsCorrectAsync(string url, HttpClient client)
+        {
+            var html = await HttpReader.ReadAsync(url, client);
+
+            var parser = new HtmlParser();
+            var document = await parser.ParseDocumentAsync(html);
+            var userName = document.QuerySelector(".name a");
+
+            return userName != null;
         }
     }
 }

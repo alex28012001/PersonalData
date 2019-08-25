@@ -15,10 +15,7 @@ namespace DataCollector.Core.Parsers.Implementation
             var parser = new HtmlParser();
             var document = await parser.ParseDocumentAsync(html);
 
-            var fullName = document.QuerySelector(".name a")?.TextContent;
-            if (fullName == null)
-                return new CommonInfo();
-
+            var fullName = document.QuerySelector(".name a").TextContent;
             var parsedName = fullName.Split(" ");
             string lastName;
             parsedName.TryGet(1, out lastName);
