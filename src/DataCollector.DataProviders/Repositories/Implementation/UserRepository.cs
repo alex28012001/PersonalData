@@ -27,7 +27,7 @@ namespace DataCollector.DataProviders.Repositories.Implementation
                 bulkCollection.Add(insertModel);
             }
 
-            await _db.Users.BulkWriteAsync(bulkCollection);
+            await Db.Users.BulkWriteAsync(bulkCollection);
         }
     }
 }

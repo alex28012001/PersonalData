@@ -9,7 +9,7 @@ namespace DataCollector.Core.ComponentFactories.Abstraction
     public interface IUserFactory
     {
         /// <summary>
-        /// Create url generator.
+        /// Create source generator.
         /// </summary>
         /// <returns>The implementation of ISourcesGenerator interface.</returns>
         ISourcesGenerator CreateSourcesGenerator();

@@ -28,8 +28,8 @@ namespace DataCollector.Models.Entities
         public IEnumerable<string> Musics { get; set; }
 
         /// <summary>
-        /// Contains the groups from social networks.
+        /// Contains the hobbies.
         /// </summary>
-        public IEnumerable<string> Groups { get; set; }
+        public IEnumerable<string> Hoobies { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using DataCollector.Core.ComponentFactories.Abstraction;
-using System;
+using DataCollector.Core.ComponentFactories.Implementation;
 
 namespace DataCollector.Core.UserBuilders.Implementation
 {
@@ -15,9 +15,14 @@ namespace DataCollector.Core.UserBuilders.Implementation
         /// <returns>The implementation of IUserFactory</returns>
         public static IUserFactory CreateUserFactory(string title)
         {
-            //todo: after added concrete implementations IUserFactory, make logic of choosing implementation by title
+            IUserFactory userFactory = null;
 
-            throw new NotImplementedException();
+            switch (title)
+            {
+                case "freelance.ru": userFactory = new FreelanceUserFactory(); break;
+            }
+
+            return userFactory;
         }
     }
 }

@@ -6,6 +6,7 @@ using DataCollector.DataProviders.Repositories.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 
 namespace DataCollector.Shell.ConsoleUI
 {
@@ -13,13 +14,26 @@ namespace DataCollector.Shell.ConsoleUI
     {
         static void Main(string[] args)
         {
+            Aaaa().GetAwaiter().GetResult();
+        }
+
+        private static async Task Aaaa()
+        {
             var serviceollection = new ServiceCollection();
             ConfigureServices(serviceollection);
 
             var serviceProvider = serviceollection.BuildServiceProvider();
 
-            var userService = serviceProvider.GetService<IUserService>();
-            userService.GeneratingUsersAsync().GetAwaiter().GetResult();
+            var userService = serviceProvider.GetRequiredService<IUserService>();
+
+            userService.GeneratedUser += UserService_GeneratedUser;
+
+            await userService.GeneratingUsersAsync();
+        }
+
+        private static void UserService_GeneratedUser(Models.Entities.User obj)
+        {
+            Console.WriteLine($"{obj.CommonInfo.FirstName} {obj.CommonInfo.LastName} {obj.Contacts.MobilePhone} {obj.Contacts.Email}");
         }
 
         public static void ConfigureServices(IServiceCollection serviceCollection)

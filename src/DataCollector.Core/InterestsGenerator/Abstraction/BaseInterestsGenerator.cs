@@ -38,9 +38,8 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
             var typesOfFilmsTask = GenerateTypesOfFilmsAsync(activities.Films);
             var typesOfGamesTask = GenerateTypesOfGamesAsync(activities.Games);
             var typesOfMusicTask = GenerateTypesOfMusicAsync(activities.Musics);
-            var hobbiesTask = GenerateHobbiesAsync(activities.Groups);
 
-            await Task.WhenAll(typesOfBooksTask, typesOfFilmsTask, typesOfGamesTask, typesOfMusicTask, hobbiesTask);
+            await Task.WhenAll(typesOfBooksTask, typesOfFilmsTask, typesOfGamesTask, typesOfMusicTask);
 
             var interests = new Interests()
             {
@@ -48,7 +47,6 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
                 TypesOfFilms = typesOfFilmsTask.Result,
                 TypesOfGames = typesOfGamesTask.Result,
                 TypesOfMusic = typesOfMusicTask.Result,
-                Hobbies = hobbiesTask.Result
             };
 
             return interests;
@@ -93,8 +91,6 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
 
             return await GenerateGenresAsync(musicTitles, _generatorConstansts.MusicCategory);
         }
-
-        protected abstract Task<IEnumerable<string>> GenerateHobbiesAsync(IEnumerable<string> groupsTitles);
 
 
 

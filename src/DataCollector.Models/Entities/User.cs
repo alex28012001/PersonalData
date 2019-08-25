@@ -6,7 +6,7 @@ namespace DataCollector.Models.Entities
     /// <summary>
     /// The class contains user information.
     /// </summary>
-    public class User
+    public class User : IMongoEntity
     {
         /// <summary>
         /// Contains record identificator for mongoDb.

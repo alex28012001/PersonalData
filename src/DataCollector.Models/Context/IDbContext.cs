@@ -12,5 +12,10 @@ namespace DataCollector.Models.Context
         /// Contains list of user entity.
         /// </summary>
         IMongoCollection<User> Users { get; }
+
+        /// <summary>
+        /// Contains list of city entity.
+        /// </summary>
+        IMongoCollection<City> Cities { get; }
     }
 }
