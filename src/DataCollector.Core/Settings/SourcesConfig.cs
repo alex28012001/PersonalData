@@ -12,7 +12,6 @@ namespace DataCollector.Core.Settings
         /// </summary>
         public IEnumerable<SourceInfo> Sources { get; set; }
 
-
         /// <summary>
         /// Contains max generated users at a time. 
         /// It's needed because before saved users they located in memory.

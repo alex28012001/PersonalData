@@ -6,6 +6,7 @@ using DataCollector.DataProviders.Repositories.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DataCollector.Shell.ConsoleUI
@@ -14,6 +15,9 @@ namespace DataCollector.Shell.ConsoleUI
     {
         static void Main(string[] args)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Console.OutputEncoding = Encoding.UTF8;
+
             Aaaa().GetAwaiter().GetResult();
         }
 

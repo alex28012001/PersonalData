@@ -1,5 +1,6 @@
 ﻿using DataCollector.Core.ComponentFactories.Abstraction;
 using DataCollector.Core.ComponentFactories.Implementation;
+using DataCollector.Core.Settings;
 
 namespace DataCollector.Core.UserBuilders.Implementation
 {
@@ -11,15 +12,16 @@ namespace DataCollector.Core.UserBuilders.Implementation
         /// <summary>
         /// Choose implementation of IUserFactory by title and creating her.
         /// </summary>
-        /// <param name="title">The title of resource where from getting data.</param>
+        /// <param name="source">The source where from getting data.</param>
         /// <returns>The implementation of IUserFactory</returns>
-        public static IUserFactory CreateUserFactory(string title)
+        public static IUserFactory CreateUserFactory(SourceInfo source)
         {
             IUserFactory userFactory = null;
 
-            switch (title)
+            switch (source.Title)
             {
                 case "freelance.ru": userFactory = new FreelanceUserFactory(); break;
+                case "vk.com": userFactory = new VkUserFactory((string)source.Data); break;
             }
 
             return userFactory;
