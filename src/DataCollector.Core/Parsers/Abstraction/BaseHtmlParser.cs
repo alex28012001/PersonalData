@@ -1,9 +1,9 @@
 ﻿using System;
-using DataCollector.Core.Providers;
 using DataCollector.Models.Entities;
 using System.Collections.Generic;
 using DataCollector.Common.Helpers;
 using System.Threading.Tasks;
+using DataCollector.Core.Providers;
 
 namespace DataCollector.Core.Parsers.Abstraction
 {

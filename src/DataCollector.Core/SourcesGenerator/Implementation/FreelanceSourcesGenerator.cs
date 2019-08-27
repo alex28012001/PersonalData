@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using DataCollector.Common.Helpers;
+using DataCollector.Core.Settings;
 using DataCollector.Core.SourcesGenerator.Abstraction;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,11 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
         /// <summary>
         /// Generate urls by template.
         /// </summary>
-        /// <param name="urlTemplate">The web site url template.</param>
+        /// <param name="count">The count needed sources.</param>
+        /// <param name="skip">The count skiped sources.</param>
         /// <returns>The collection of urls.</returns>
-        public async Task<IEnumerable<string>> GenerateAsync(string urlTemplate, int count, int skip = 0)
+        public async Task<IEnumerable<string>> GenerateAsync(int count, int skip = 0)
         {
-            if (urlTemplate == null) 
-            {
-                throw new ArgumentNullException(nameof(urlTemplate));
-            }
-
             if (count < 0) 
             {
                 throw new ArgumentException("Count sources cannot be less 0", nameof(count));
@@ -54,7 +51,7 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
 
             do
             {
-                var pageUrl = string.Format(urlTemplate, page);
+                var pageUrl = string.Format(UrlConstants.FreelancePageUrlTemplate, page);
                 var pageHtml = await HttpReader.ReadAsync(pageUrl);
                 var document = parser.ParseDocument(pageHtml);
                 htmlElements = document.QuerySelectorAll(".user_info .name a");
@@ -62,7 +59,7 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
                 for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
                     var href = htmlElements[i].GetAttribute("href");
-                    var userUrl = $"https://freelance.ru/{href}";
+                    var userUrl = string.Format(UrlConstants.FreelanceUserUrlTemplate, href);
                     var urlIsCorrect = await UrlIsCorrectAsync(userUrl, httpClient);
 
                     if (urlIsCorrect && urls.Count < count)

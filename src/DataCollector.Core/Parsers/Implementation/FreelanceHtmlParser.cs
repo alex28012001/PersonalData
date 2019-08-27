@@ -1,10 +1,10 @@
 ﻿using AngleSharp.Html.Parser;
-using DataCollector.Core.Parsers.Abstraction;
 using DataCollector.Models.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataCollector.Common.Helpers;
+using DataCollector.Core.Parsers.Abstraction;
 
 namespace DataCollector.Core.Parsers.Implementation
 {
@@ -31,7 +31,7 @@ namespace DataCollector.Core.Parsers.Implementation
                 FirstName = parsedName[0],
                 LastName = lastName,
                 City = city,
-                Gender = Models.Entities.Common.Gender.None
+                Gender = Models.Entities.Common.Gender.Unknown
             };
 
             return commonInfo;

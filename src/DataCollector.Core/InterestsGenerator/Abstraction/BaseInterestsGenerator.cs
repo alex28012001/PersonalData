@@ -99,21 +99,29 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
             var listOfTypes = new List<string>();
 
             foreach (var itemTitle in itemsTitles)
-            {    
+            {
                 var searchUrl = string.Format(_generatorConstansts.SearchItemsUrlTemplate, category, itemTitle);
 
                 var itemsJson = await HttpReader.ReadAsync(searchUrl);
-                var items = JObject.Parse(itemsJson);
-                var correctItemTitle = (string)items["query"]["search"][0]["title"];
+                var itemsObject = JObject.Parse(itemsJson);
+                var itemsArray = (JArray)itemsObject["query"]["search"];
 
+                if (itemsArray.Count == 0)
+                {
+                    var emptyList = Enumerable.Empty<string>();
+                    return await Task.FromResult(emptyList);
+                }
+
+                var correctItemTitle = (string)itemsArray[0]["title"];
+            
                 var itemUrl = string.Format(_generatorConstansts.SearchItemUrlTemplate, correctItemTitle);
                 var itemJson = await HttpReader.ReadAsync(itemUrl);
 
                 var item = JObject.Parse(itemJson);
                 var itemInfo = (string)item["query"]["pages"].First.First["revisions"][0]["*"];
 
-                var infoBlocks = itemInfo.Split("| ");
-                var genreBlock = infoBlocks.First(p => p.StartsWith("Жанр"));
+                var infoBlocks = itemInfo.Split("|");
+                var genreBlock = infoBlocks.First(p => p.IndexOf("Жанр") != -1);
                 var genresPattern = "[[]{2}[А-Яа-я ()|]*[]]{2}";
                 var genresMatches = Regex.Matches(genreBlock, genresPattern);
 
