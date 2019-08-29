@@ -1,29 +1,24 @@
-﻿using DataCollector.Core.SourcesGenerator.Abstraction;
+﻿using AngleSharp.Html.Parser;
+using DataCollector.Common.Helpers;
+using DataCollector.Core.SourcesGenerator.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VkNet;
-using VkNet.Model;
-using DataCollector.Common.Helpers;
-using AngleSharp.Html.Parser;
 
 namespace DataCollector.Core.SourcesGenerator.Implementation
 {
+    /// <summary>
+    /// The class provides generating user ids vk system.
+    /// </summary>
     public class VkSourcesGenerator : ISourcesGenerator
     {
-        private readonly VkApi _vkApi;
-
-        public VkSourcesGenerator(string accessToken)
-        {
-            _vkApi = new VkApi();
-
-            _vkApi.Authorize(new ApiAuthParams
-            {
-                AccessToken = accessToken
-            });
-        }
-
+        /// <summary>
+        /// Generating user ids.
+        /// </summary>
+        /// <param name="count">The count needed sources.</param>
+        /// <param name="skip">The count skiped sources.</param>
+        /// <returns>The collection of user ids.</returns>
         public async Task<IEnumerable<string>> GenerateAsync(int count, int skip = 0)
         {
             if(count < 0)
@@ -36,47 +31,15 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
                 throw new ArgumentException("Skiped sources cannot be less 0", nameof(skip));
             }
 
-            var userIds = new List<string>();
-            var start = skip == 0 ? 1 : skip;
-
-            //Vk api can send maximum 1000 users by one request
-            var maxGettingUsers = 1000;
-            var countGetUsersByMax = (int)Math.Floor((double)count / maxGettingUsers);
+            var start = skip == 0 ? 1 : skip + 1;
             var countVkUsers = await GetCountVkUsersAsync();
 
-            //First cycle send reuqests for received 1000 users 
-            while (countGetUsersByMax > 0)
+            if(start + count > countVkUsers)
             {
-                for (int i = 0; i < countGetUsersByMax; i++)
-                {
-                    var ids = Enumerable.Range(start, maxGettingUsers).Select(id => (long)id);
-                    var vkUsers = await _vkApi.Users.GetAsync(ids);
-
-                    var validUsers = vkUsers.Where(u => u.IsDeactivated == false);
-                    var validIds = validUsers.Select(p => p.Id.ToString());
-                    userIds.AddRange(validIds);
-
-                    start += ids.Count();
-                }
-
-                var residue = count - userIds.Count;
-                countGetUsersByMax = (int)Math.Floor((double)residue / maxGettingUsers);
+                return Enumerable.Empty<string>();
             }
 
-            //Second cycle send reuqests for received residue after first cycle
-            while (userIds.Count < count && start < countVkUsers)
-            {
-                var residue = count - userIds.Count;
-                var ids = Enumerable.Range(start, residue).Select(id => (long)id);
-                var vkUsers = await _vkApi.Users.GetAsync(ids);
-
-                var validUsers = vkUsers.Where(u => u.IsDeactivated == false);
-                var validIds = validUsers.Select(p => p.Id.ToString());
-                userIds.AddRange(validIds);
-
-                start += ids.Count();
-            }
-
+            var userIds = Enumerable.Range(start, count).Select(id => id.ToString());
             return userIds;
         }
 

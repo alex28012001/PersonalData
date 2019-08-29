@@ -6,8 +6,12 @@ using System.Linq;
 
 namespace DataCollector.Core.Api.Mappers.Implementation
 {
+    /// <summary>
+    /// The classs contains logic of mapping Vk user entity to DataCollector User entity.
+    /// </summary>
     public class VkUserMapper : IUserMapper<VkNet.Model.User>
     {
+        ///<inheritdoc />
         public User MapToUser(VkNet.Model.User vkUser)
         {
             if (vkUser == null)

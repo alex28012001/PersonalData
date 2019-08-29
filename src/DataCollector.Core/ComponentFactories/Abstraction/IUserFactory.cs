@@ -1,5 +1,6 @@
 ﻿using DataCollector.Core.Providers;
 using DataCollector.Core.SourcesGenerator.Abstraction;
+using DataCollector.Core.SourcesValidator.Abstraction;
 
 namespace DataCollector.Core.ComponentFactories.Abstraction
 {
@@ -13,6 +14,12 @@ namespace DataCollector.Core.ComponentFactories.Abstraction
         /// </summary>
         /// <returns>The implementation of ISourcesGenerator interface.</returns>
         ISourcesGenerator CreateSourcesGenerator();
+
+        /// <summary>
+        /// Create source validator.
+        /// </summary>
+        /// <returns>The implementation of ISourcesValidator interface.</returns>
+        ISourcesValidator CreateSourcesValidator();
 
         /// <summary>
         /// Create User provider.
