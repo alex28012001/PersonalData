@@ -3,9 +3,13 @@ using DataCollector.Core.Services.Abstraction;
 using DataCollector.Core.Settings;
 using DataCollector.DataProviders.Repositories.Abstraction;
 using DataCollector.DataProviders.Repositories.Implementation;
+using log4net;
+using log4net.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,25 +17,34 @@ namespace DataCollector.Shell.ConsoleUI
 {
     class Program
     {
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
+
         static void Main(string[] args)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Console.OutputEncoding = Encoding.UTF8;
 
-            Aaaa().GetAwaiter().GetResult();
+            try
+            {
+                RunApp().GetAwaiter().GetResult();
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex.Message, ex);
+            }
         }
 
-        private static async Task Aaaa()
+        private static async Task RunApp()
         {
+            ConfigureLogger();
+
             var serviceollection = new ServiceCollection();
             ConfigureServices(serviceollection);
 
             var serviceProvider = serviceollection.BuildServiceProvider();
-
             var userService = serviceProvider.GetRequiredService<IUserService>();
 
             userService.GeneratedUser += UserService_GeneratedUser;
-
             await userService.GeneratingUsersAsync();
         }
 
@@ -55,6 +68,14 @@ namespace DataCollector.Shell.ConsoleUI
             serviceCollection.AddScoped<IUserRepository>(p => new UserRepository(connectionString));
 
             serviceCollection.AddCoreServices();
+        }
+
+        public static void ConfigureLogger()
+        {
+            var callingAssembly = Assembly.GetCallingAssembly();
+            var logRepository = LogManager.GetRepository(callingAssembly);
+
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
         }
     }
 }
