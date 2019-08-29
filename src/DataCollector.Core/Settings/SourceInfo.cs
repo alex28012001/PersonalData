@@ -11,8 +11,8 @@
         public string Title { get; set; }
 
         /// <summary>
-        /// Contains template.
+        /// Contains needed data for user creating components, can be null.
         /// </summary>
-        public string Template { get; set; }
+        public object Data { get; set; }
     }
 }

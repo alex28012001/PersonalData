@@ -9,10 +9,11 @@ namespace DataCollector.Core.SourcesGenerator.Abstraction
     public interface ISourcesGenerator
     {
         /// <summary>
-        /// Generate sources by template.
+        /// Generate sources.
         /// </summary>
-        /// <param name="template">The template source.</param>
+        /// <param name="amount">The count needed sources.</param>
+        /// <param name="skip">The count skiped sources.</param>
         /// <returns>The collection of sources.</returns>
-        Task<IEnumerable<string>> GenerateAsync(string template, int amount, int skip = 0);
+        Task<IEnumerable<string>> GenerateAsync(int count, int skip = 0);
     }
 }

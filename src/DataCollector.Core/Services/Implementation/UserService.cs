@@ -51,9 +51,10 @@ namespace DataCollector.Core.Services.Implementation
 
             foreach (var sourceInfo in _sourcesConfig.Sources)
             {
-                var componentsFactory = UserComponentsFactory.CreateUserFactory(sourceInfo.Title);
+                var componentsFactory = UserComponentsFactory.CreateUserFactory(sourceInfo);
 
                 var sourcesGenerator = componentsFactory.CreateSourcesGenerator();
+                var sourcesValidator = componentsFactory.CreateSourcesValidator();
                 var userProvider = componentsFactory.CreateUserProvider();
 
 
@@ -62,9 +63,10 @@ namespace DataCollector.Core.Services.Implementation
 
                 do
                 {
-                    sources = await sourcesGenerator.GenerateAsync(sourceInfo.Template, _sourcesConfig.MaxGeneratedUsers, skip);
+                    sources = await sourcesGenerator.GenerateAsync(_sourcesConfig.MaxGeneratedUsers, skip);
+                    var validatedSources = await sourcesValidator.ValidateAsync(sources);
 
-                    foreach (var source in sources)
+                    foreach (var source in validatedSources)
                     {
                         var user = await userProvider.CreateUserAsync(source);
                         user.Interests = await _interestsGenerator.GenerateInterestsAsync(user.Activities);

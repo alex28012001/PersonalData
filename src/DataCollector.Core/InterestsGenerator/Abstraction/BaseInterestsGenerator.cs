@@ -29,7 +29,7 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
         ///<inheritdoc />
         public async Task<Interests> GenerateInterestsAsync(Activities activities)
         {
-            if(activities == null)
+            if (activities == null)
             {
                 throw new ArgumentNullException(nameof(activities));
             }
@@ -64,11 +64,11 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
 
         protected virtual async Task<IEnumerable<string>> GenerateTypesOfFilmsAsync(IEnumerable<string> filmsTitles)
         {
-            if(filmsTitles == null)
+            if (filmsTitles == null)
             {
                 throw new ArgumentNullException(nameof(filmsTitles));
             }
-    
+
             return await GenerateGenresAsync(filmsTitles, _generatorConstansts.FilmsCategory);
         }
 
@@ -99,12 +99,19 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
             var listOfTypes = new List<string>();
 
             foreach (var itemTitle in itemsTitles)
-            {    
+            {
                 var searchUrl = string.Format(_generatorConstansts.SearchItemsUrlTemplate, category, itemTitle);
 
                 var itemsJson = await HttpReader.ReadAsync(searchUrl);
-                var items = JObject.Parse(itemsJson);
-                var correctItemTitle = (string)items["query"]["search"][0]["title"];
+                var itemsObject = JObject.Parse(itemsJson);
+                var itemsArray = (JArray)itemsObject["query"]["search"];
+
+                if (itemsArray.Count == 0)
+                {
+                    return await Task.FromResult(Enumerable.Empty<string>());
+                }
+
+                var correctItemTitle = (string)itemsArray[0]["title"];
 
                 var itemUrl = string.Format(_generatorConstansts.SearchItemUrlTemplate, correctItemTitle);
                 var itemJson = await HttpReader.ReadAsync(itemUrl);
@@ -112,9 +119,15 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
                 var item = JObject.Parse(itemJson);
                 var itemInfo = (string)item["query"]["pages"].First.First["revisions"][0]["*"];
 
-                var infoBlocks = itemInfo.Split("| ");
-                var genreBlock = infoBlocks.First(p => p.StartsWith("Жанр"));
-                var genresPattern = "[[]{2}[А-Яа-я ()|]*[]]{2}";
+                var infoBlocks = itemInfo.Split("|");
+                var genreBlock = infoBlocks.FirstOrDefault(p => p.ToLower().IndexOf("жанр") != -1);
+
+                if (genreBlock == null)
+                {
+                    return await Task.FromResult(Enumerable.Empty<string>());
+                }
+
+                var genresPattern = "[[]{2}[А-Яа-я ()|-]*[]]{2}";
                 var genresMatches = Regex.Matches(genreBlock, genresPattern);
 
                 foreach (var match in genresMatches)
@@ -130,6 +143,7 @@ namespace DataCollector.Core.InterestsGenerator.Abstraction
 
                     listOfTypes.Add(parsedGenre);
                 }
+
             }
 
             return listOfTypes;

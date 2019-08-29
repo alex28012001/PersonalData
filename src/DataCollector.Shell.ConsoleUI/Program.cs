@@ -6,6 +6,7 @@ using DataCollector.DataProviders.Repositories.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DataCollector.Shell.ConsoleUI
@@ -14,6 +15,9 @@ namespace DataCollector.Shell.ConsoleUI
     {
         static void Main(string[] args)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Console.OutputEncoding = Encoding.UTF8;
+
             Aaaa().GetAwaiter().GetResult();
         }
 
@@ -33,7 +37,7 @@ namespace DataCollector.Shell.ConsoleUI
 
         private static void UserService_GeneratedUser(Models.Entities.User obj)
         {
-            Console.WriteLine($"{obj.CommonInfo.FirstName} {obj.CommonInfo.LastName} {obj.Contacts.MobilePhone} {obj.Contacts.Email}");
+             Console.WriteLine($"{obj.CommonInfo.FirstName} {obj.CommonInfo.LastName} | tel:{obj.Contacts.MobilePhone} | vk:{obj.Contacts.Vk} | email:{obj.Contacts.Email} | inst:{obj.Contacts.Instagram}");
         }
 
         public static void ConfigureServices(IServiceCollection serviceCollection)

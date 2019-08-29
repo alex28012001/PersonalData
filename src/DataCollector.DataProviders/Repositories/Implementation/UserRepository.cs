@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using DataCollector.DataProviders.Repositories.Abstraction;
+﻿using DataCollector.DataProviders.Repositories.Abstraction;
 using DataCollector.Models.Entities;
 using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DataCollector.DataProviders.Repositories.Implementation
 {

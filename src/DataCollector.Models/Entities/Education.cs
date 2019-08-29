@@ -16,8 +16,13 @@
         public string City { get; set; }
 
         /// <summary>
-        /// Contains the educational institution.
+        /// Contains the title of educational institution.
         /// </summary>
         public string EducationalInstitution { get; set; }
+
+        /// <summary>
+        /// Contains the title of speciality.
+        /// </summary>
+        public string Speciality { get; set; }
     }
 }

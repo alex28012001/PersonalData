@@ -34,6 +34,11 @@
         /// Contains the instagram.
         /// </summary>
         public string Instagram { get; set; }
+
+        /// <summary>
+        /// Contains the twitter.
+        /// </summary>
+        public string Twitter { get; set; }
     }
 }
 
