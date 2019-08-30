@@ -46,7 +46,9 @@ namespace DataCollector.Core.Api.Mappers.Implementation
                     var education = new Education()
                     {
                         EducationalInstitution = s.Name,
-                        Speciality = s.Speciality
+                        Speciality = s.Speciality,
+                        Country = s.Country?.ToString(),
+                        City = s.City?.ToString()   
                     };
 
                     return education;
@@ -56,7 +58,8 @@ namespace DataCollector.Core.Api.Mappers.Implementation
                 {
                     var career = new Сareer()
                     {
-                        City = c.CityName,
+                        City = c.CityId?.ToString(),
+                        Country = c.CountryId?.ToString(),
                         PlaceOfWork = c.Company,
                         Position = c.Position
                     };
@@ -82,6 +85,14 @@ namespace DataCollector.Core.Api.Mappers.Implementation
                     Hoobies = vkUser.Interests != null ? vkUser.Interests.Split(',', StringSplitOptions.RemoveEmptyEntries) : Enumerable.Empty<string>()
                 }
             };
+
+            var highEdication = new Education()
+            {
+                EducationalInstitution = vkUser.Education?.UniversityName,
+                Speciality = vkUser.Education?.FacultyName
+            };
+            user.Education = user.Education.Concat(new Education[] { highEdication });
+
 
             return user;
         }

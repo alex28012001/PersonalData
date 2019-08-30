@@ -54,7 +54,7 @@ namespace DataCollector.Core.Api
         /// <returns>The user entity.</returns>
         public async Task<Models.Entities.User> CreateUserAsync(string userId)
         {
-            if(userId == null)
+            if (userId == null)
             {
                 throw new ArgumentNullException(nameof(userId));
             }
@@ -62,9 +62,49 @@ namespace DataCollector.Core.Api
             var correctUserId = Convert.ToInt64(userId);
             var vkUsers = await _vkApi.Users.GetAsync(new long[] { correctUserId }, ProfileFields.All);
             var vkUser = vkUsers.Single();
-
             var user = _userMapper.MapToUser(vkUser);
+
+            await AddAdditionalInfoAsync(user);
             return user;
+        }
+
+        private async Task AddAdditionalInfoAsync(Models.Entities.User user)
+        {
+            var educations = user.Education.ToList();
+
+            foreach (var education in educations)
+            {
+                if (education.Country != null)
+                {
+                    var countries = await _vkApi.Database.GetCountriesByIdAsync(Convert.ToInt32(education.Country));
+                    education.Country = countries.Single().Title;
+                }
+
+                if (education.City != null)
+                {
+                    var cities = await _vkApi.Database.GetCitiesByIdAsync(Convert.ToInt32(education.City));
+                    education.City = cities.Single().Title;
+                }
+            }
+
+            var jobs = user.Сareer.ToList();
+
+            foreach (var job in jobs)
+            {
+                if (job.Country != null)
+                {
+                    var countries = await _vkApi.Database.GetCountriesByIdAsync(Convert.ToInt32(job.Country));
+                    job.Country = countries.Single().Title;
+                }
+
+                if (job.City != null)
+                {
+                    var cities = await _vkApi.Database.GetCitiesByIdAsync(Convert.ToInt32(job.City));
+                    job.City = cities.Single().Title;
+                }
+            }
+
+            user.Сareer = jobs;
         }
     }
 }
