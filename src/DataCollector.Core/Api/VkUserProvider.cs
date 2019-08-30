@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
+using VkNet.Model.RequestParams;
 
 namespace DataCollector.Core.Api
 {
@@ -60,16 +61,31 @@ namespace DataCollector.Core.Api
             }
 
             var correctUserId = Convert.ToInt64(userId);
+ 
             var vkUsers = await _vkApi.Users.GetAsync(new long[] { correctUserId }, ProfileFields.All);
             var vkUser = vkUsers.Single();
             var user = _userMapper.MapToUser(vkUser);
 
-            await AddAdditionalInfoAsync(user);
+            await AddAdditionalUserInfoAsync(user, correctUserId);
             return user;
         }
 
-        private async Task AddAdditionalInfoAsync(Models.Entities.User user)
+        private async Task AddAdditionalUserInfoAsync(Models.Entities.User user, long vkUserId)
         {
+            var userGroups = await _vkApi.Groups.GetAsync(new GroupsGetParams()
+            {
+                UserId = vkUserId,
+                Extended = true,
+                Filter = GroupsFilters.Groups | GroupsFilters.Publics,
+                Fields = GroupsFields.Activity | GroupsFields.BanInfo
+            });
+
+            var validGroups = userGroups.Where(g => g.Deactivated == null && g.IsClosed.Value == VkNet.Enums.GroupPublicity.Public);
+            var activities = validGroups.Select(g => g.Activity).Distinct();
+
+            user.Activities.Hoobies = activities;
+
+
             var educations = user.Education.ToList();
 
             foreach (var education in educations)

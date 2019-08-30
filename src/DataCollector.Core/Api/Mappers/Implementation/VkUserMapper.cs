@@ -33,7 +33,7 @@ namespace DataCollector.Core.Api.Mappers.Implementation
 
                 Contacts = new Contacts()
                 {
-                    MobilePhone = vkUser.Contacts?.MobilePhone,
+                    MobilePhone = vkUser.MobilePhone,
                     Skype = vkUser.Connections.Skype,
                     Facebook = vkUser.Connections.Facebook,
                     Instagram = vkUser.Connections.Instagram,
