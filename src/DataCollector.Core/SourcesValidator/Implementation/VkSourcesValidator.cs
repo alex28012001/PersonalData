@@ -55,7 +55,7 @@ namespace DataCollector.Core.SourcesValidator.Implementation
             var ids = sources.Skip(skip).Take(resudie).Select(id => Convert.ToInt64(id));
             var vkUsers = await _vkApi.Users.GetAsync(ids);
 
-            var validatedUsers = vkUsers.Where(u => u.IsDeactivated == false);
+            var validatedUsers = vkUsers.Where(u => u.IsDeactivated == false && u.IsClosed == false);
             var validatedIds = validatedUsers.Select(p => p.Id.ToString());
             correctSources.AddRange(validatedIds);
 
@@ -64,7 +64,7 @@ namespace DataCollector.Core.SourcesValidator.Implementation
                 ids = sources.Skip(skip).Take(maxGettingUsers).Select(id => Convert.ToInt64(id));
                 vkUsers = await _vkApi.Users.GetAsync(ids);
 
-                validatedUsers = vkUsers.Where(u => u.IsDeactivated == false);
+                validatedUsers = vkUsers.Where(u => u.IsDeactivated == false && u.IsClosed == false);
                 validatedIds = validatedUsers.Select(p => p.Id.ToString());
                 correctSources.AddRange(validatedIds);
 
