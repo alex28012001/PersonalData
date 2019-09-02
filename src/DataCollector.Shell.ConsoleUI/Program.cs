@@ -23,6 +23,7 @@ namespace DataCollector.Shell.ConsoleUI
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Console.OutputEncoding = Encoding.UTF8;
+            Console.ForegroundColor = ConsoleColor.Green;
 
             try
             {
