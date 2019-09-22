@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataCollector.Common.Helpers;
 using DataCollector.Core.Parsers.Abstraction;
+using AngleSharp.Html.Dom;
 
 namespace DataCollector.Core.Parsers.Implementation
 {
@@ -14,11 +15,8 @@ namespace DataCollector.Core.Parsers.Implementation
     /// </summary>
     public class FreelanceHtmlParser : BaseHtmlParser
     {
-        protected override async Task<CommonInfo> ParseCommonInfoAsync(string html)
+        protected override Task<CommonInfo> ParseCommonInfoAsync(IHtmlDocument document)
         {
-            var parser = new HtmlParser();
-            var document = await parser.ParseDocumentAsync(html);
-
             var fullName = document.QuerySelector(".name a").TextContent;
             var parsedName = fullName.Split(" ");
             string lastName;
@@ -34,14 +32,11 @@ namespace DataCollector.Core.Parsers.Implementation
                 Gender = Models.Entities.Common.Gender.Unknown
             };
 
-            return commonInfo;
+            return Task.FromResult(commonInfo);
         }
 
-        protected override async Task<Contacts> ParseContactsAsync(string html)
+        protected override Task<Contacts> ParseContactsAsync(IHtmlDocument document)
         {
-            var parser = new HtmlParser();
-            var document = await parser.ParseDocumentAsync(html);
-
             var mobilePhone = document.QuerySelector(".phone")?.TextContent;
             var email = document.QuerySelector(".email")?.TextContent;
             var skype = document.QuerySelector(".skype")?.TextContent;
@@ -57,14 +52,11 @@ namespace DataCollector.Core.Parsers.Implementation
                 Instagram = instagram
             };
 
-            return contacts;
+            return Task.FromResult(contacts);
         }
 
-        protected override async Task<Activities> ParseActivitiesAsync(string html)
+        protected override Task<Activities> ParseActivitiesAsync(IHtmlDocument document)
         {
-            var parser = new HtmlParser();
-            var document = await parser.ParseDocumentAsync(html);
-
             var hobbies = document.QuerySelectorAll(".specli").SelectMany(p => p.TextContent.Split(" / "));
 
             var activities = new Activities()
@@ -76,22 +68,22 @@ namespace DataCollector.Core.Parsers.Implementation
                 Musics = Enumerable.Empty<string>()
             };
 
-            return activities;
+            return Task.FromResult(activities);
         }
 
-        protected override Task<IEnumerable<Education>> ParseEducationAsync(string html)
+        protected override Task<IEnumerable<Education>> ParseEducationAsync(IHtmlDocument document)
         {
             var educations = Enumerable.Empty<Education>();
             return Task.FromResult(educations);
         }
 
-        protected override Task<IEnumerable<Сareer>> ParseCareerAsync(string html)
+        protected override Task<IEnumerable<Сareer>> ParseCareerAsync(IHtmlDocument document)
         {
             var careers = Enumerable.Empty<Сareer>();
             return Task.FromResult(careers);
         }
 
-        protected override Task<LifePositions> ParseLifePositionAsync(string html)
+        protected override Task<LifePositions> ParseLifePositionAsync(IHtmlDocument document)
         {
             var lifePosition = new LifePositions();
             return Task.FromResult(lifePosition);
