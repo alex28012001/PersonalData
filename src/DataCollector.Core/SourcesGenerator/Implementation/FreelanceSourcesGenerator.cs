@@ -40,7 +40,7 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
             var skipedPages = (int)Math.Floor((double)skip / countItemsOnPage);
             var skipedItems = skip - skipedPages * countItemsOnPage;
 
-            var page = ++skipedPages;
+            var page = skipedPages + 1;
             IHtmlCollection<IElement> htmlElements = null;
 
             do
