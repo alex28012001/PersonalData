@@ -50,7 +50,7 @@ namespace DataCollector.Core.SourcesGenerator.Implementation
                 var document = parser.ParseDocument(pageHtml);
                 htmlElements = document.QuerySelectorAll(".user_info .name a");
 
-                for (int i = skipedItems + 1; i < htmlElements.Length; i++)
+                for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
                     var href = htmlElements[i].GetAttribute("href");
                     var userUrl = string.Format(UrlConstants.FreelanceUserUrlTemplate, href);
