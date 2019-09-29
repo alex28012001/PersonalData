@@ -18,16 +18,8 @@ namespace DataCollector.DataProviders.Repositories.Implementation
 
         ///<inheritdoc />
         public async Task BulkInsertAsync(IEnumerable<User> users)
-        {
-            var bulkCollection = new List<WriteModel<User>>();
-
-            foreach (var user in users)
-            {
-                var insertModel = new InsertOneModel<User>(user);
-                bulkCollection.Add(insertModel);
-            }
-
-            await Db.Users.BulkWriteAsync(bulkCollection);
+        {   
+            await Db.Users.InsertManyAsync(users);
         }
     }
 }
