@@ -1,8 +1,8 @@
-﻿using DataCollector.Core.Ioc;
-using DataCollector.Core.Services.Abstraction;
+﻿using DataCollector.Core.DI;
 using DataCollector.Core.Settings;
-using DataCollector.DataProviders.Repositories.Abstraction;
-using DataCollector.DataProviders.Repositories.Implementation;
+using DataCollector.DataProviders.Context;
+using DataCollector.DataProviders.DI;
+using DataCollector.Models.Interfaces;
 using log4net;
 using log4net.Config;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +19,7 @@ namespace DataCollector.Shell.ConsoleUI
     {
         private static readonly ILog _logger = LogManager.GetLogger(typeof(Program));
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Console.OutputEncoding = Encoding.UTF8;
@@ -27,7 +27,7 @@ namespace DataCollector.Shell.ConsoleUI
 
             try
             {
-                RunApp().GetAwaiter().GetResult();
+                await RunApp();
             }
             catch(Exception ex)
             {
@@ -66,9 +66,10 @@ namespace DataCollector.Shell.ConsoleUI
             serviceCollection.Configure<InterestsGeneratorConstansts>(configuration.GetSection("InterestsGeneratorConstansts"));
 
             var connectionString = configuration.GetConnectionString("MongoDbConnection");
-            serviceCollection.AddScoped<IUserRepository>(p => new UserRepository(connectionString));
+            serviceCollection.AddScoped<IDbContext, DataCollectorContext>(p => new DataCollectorContext(connectionString));
 
             serviceCollection.AddCoreServices();
+            serviceCollection.AddDataProviderServices();
         }
 
         public static void ConfigureLogger()

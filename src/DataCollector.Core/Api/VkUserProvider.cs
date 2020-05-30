@@ -1,5 +1,4 @@
-﻿using DataCollector.Core.Api.Mappers.Abstraction;
-using DataCollector.Core.Providers;
+﻿using DataCollector.Models.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

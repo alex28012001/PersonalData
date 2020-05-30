@@ -1,14 +1,12 @@
-﻿using DataCollector.Core.Settings;
-using DataCollector.Core.Services.Abstraction;
-using DataCollector.Core.UserBuilders.Implementation;
-using DataCollector.DataProviders.Repositories.Abstraction;
+﻿using DataCollector.Core.ComponentFactories;
+using DataCollector.Core.Settings;
 using DataCollector.Models.Entities;
+using DataCollector.Models.Interfaces;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using System.Linq;
-using DataCollector.Core.InterestsGenerator.Abstraction;
+using System.Threading.Tasks;
 
 namespace DataCollector.Core.Services.Implementation
 {

@@ -1,5 +1,5 @@
-﻿using DataCollector.Core.Providers;
-using DataCollector.Models.Entities;
+﻿using DataCollector.Models.Entities;
+using DataCollector.Models.Interfaces;
 using System;
 using System.Threading.Tasks;
 
