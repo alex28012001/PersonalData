@@ -56,7 +56,7 @@ namespace DataCollector.Core.Api.Mappers
 
                 Сareer = vkUser.Career.Select(c =>
                 {
-                    var career = new Сareer()
+                    var career = new Career()
                     {
                         City = c.CityId?.ToString(),
                         Country = c.CountryId?.ToString(),

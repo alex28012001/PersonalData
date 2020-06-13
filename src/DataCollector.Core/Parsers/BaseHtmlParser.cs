@@ -54,7 +54,7 @@ namespace DataCollector.Core.Parsers
 
         protected abstract Contacts ParseContacts(IHtmlDocument document);
 
-        protected abstract IEnumerable<Сareer> ParseCareer(IHtmlDocument document);
+        protected abstract IEnumerable<Career> ParseCareer(IHtmlDocument document);
 
         protected abstract IEnumerable<Education> ParseEducation(IHtmlDocument document);
    

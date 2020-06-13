@@ -1,9 +1,11 @@
-﻿namespace DataCollector.Models.Entities
+﻿using System;
+
+namespace DataCollector.Models.Entities
 {
     /// <summary>
     /// The class contains information about user carrer.
     /// </summary>
-    public class Сareer
+    public class Career
     {
         /// <summary>
         /// Contains the place of work.

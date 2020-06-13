@@ -73,9 +73,9 @@ namespace DataCollector.Core.Parsers
             return Enumerable.Empty<Education>();
         }
 
-        protected override IEnumerable<Сareer> ParseCareer(IHtmlDocument document)
+        protected override IEnumerable<Career> ParseCareer(IHtmlDocument document)
         {
-            return Enumerable.Empty<Сareer>();
+            return Enumerable.Empty<Career>();
         }
 
         protected override LifePositions ParseLifePosition(IHtmlDocument document)

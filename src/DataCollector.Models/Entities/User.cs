@@ -31,7 +31,7 @@ namespace DataCollector.Models.Entities
         /// <summary>
         /// Contains info about career.
         /// </summary>
-        public IEnumerable<Сareer> Сareer { get; set; }
+        public IEnumerable<Career> Сareer { get; set; }
 
         /// <summary>
         /// Contains info about life positions.
