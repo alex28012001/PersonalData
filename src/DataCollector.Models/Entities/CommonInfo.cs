@@ -1,5 +1,4 @@
 ﻿using DataCollector.Models.Entities.Common;
-using System;
 
 namespace DataCollector.Models.Entities
 {
@@ -24,14 +23,9 @@ namespace DataCollector.Models.Entities
         public Gender Gender { get; set; }
 
         /// <summary>
-        /// Contains the date of birthday.
-        /// </summary>
-        public DateTime? DateBirthday { get; set; }
-
-        /// <summary>
         /// Contains the age.
         /// </summary>
-        public int? Age => (DateTime.UtcNow - DateBirthday)?.Days / 365;
+        public int? Age { get; set; }
 
         /// <summary>
         /// Contains the country.

@@ -1,4 +1,4 @@
-﻿using DataCollector.Core.Settings;
+﻿using DataCollector.Models.Settings;
 using Microsoft.Extensions.Options;
 
 namespace DataCollector.Core.InterestsGenerator

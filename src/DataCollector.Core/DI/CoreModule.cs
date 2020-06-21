@@ -1,5 +1,5 @@
 ﻿using DataCollector.Core.InterestsGenerator;
-using DataCollector.Core.Services.Implementation;
+using DataCollector.Core.Services;
 using DataCollector.Models.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

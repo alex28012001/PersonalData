@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataCollector.Core.Settings
+namespace DataCollector.Models.Settings
 {
     /// <summary>
     /// The class provides sources configuration.

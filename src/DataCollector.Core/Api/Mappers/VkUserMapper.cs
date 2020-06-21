@@ -28,7 +28,7 @@ namespace DataCollector.Core.Api.Mappers
                     Gender = (Gender)Enum.ToObject(typeof(Gender), (int)vkUser.Sex),
                     Country = vkUser.Country?.Title,
                     City = vkUser.City?.Title,
-                    DateBirthday = ParseVkBirthDay(vkUser.BirthDate)
+                    Age = ParseAge(vkUser.BirthDate)
                 },
 
                 Contacts = new Contacts()
@@ -97,7 +97,7 @@ namespace DataCollector.Core.Api.Mappers
             return user;
         }
 
-        private DateTime? ParseVkBirthDay(string birthDate)
+        private int? ParseAge(string birthDate)
         {
             DateTime? result = null;
             DateTime tryBirthDate;
@@ -108,7 +108,7 @@ namespace DataCollector.Core.Api.Mappers
                 result = tryBirthDate;
             }
 
-            return result;
+            return result.HasValue ? (int?)((DateTime.UtcNow - result.Value).Days / 365) : null;
         }
     }
 }

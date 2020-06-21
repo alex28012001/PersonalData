@@ -1,14 +1,14 @@
 ﻿using DataCollector.Core.ComponentFactories;
-using DataCollector.Core.Settings;
 using DataCollector.Models.Entities;
 using DataCollector.Models.Interfaces;
+using DataCollector.Models.Settings;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataCollector.Core.Services.Implementation
+namespace DataCollector.Core.Services
 {
     /// <summary>
     /// The class contains logic of generating users by sources info.

@@ -1,8 +1,8 @@
 ﻿using DataCollector.Core.DI;
-using DataCollector.Core.Settings;
 using DataCollector.DataProviders.Context;
 using DataCollector.DataProviders.DI;
 using DataCollector.Models.Interfaces;
+using DataCollector.Models.Settings;
 using log4net;
 using log4net.Config;
 using Microsoft.Extensions.Configuration;

@@ -1,4 +1,4 @@
-﻿namespace DataCollector.Core.Settings
+﻿namespace DataCollector.Models.Settings
 {
     public static class UrlConstants
     {

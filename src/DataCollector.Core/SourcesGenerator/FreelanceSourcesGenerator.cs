@@ -1,8 +1,8 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
 using DataCollector.Common.Helpers;
-using DataCollector.Core.Settings;
 using DataCollector.Models.Interfaces;
+using DataCollector.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

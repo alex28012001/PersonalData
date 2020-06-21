@@ -1,5 +1,5 @@
-﻿using DataCollector.Core.Settings;
-using DataCollector.Models.Interfaces;
+﻿using DataCollector.Models.Interfaces;
+using DataCollector.Models.Settings;
 
 namespace DataCollector.Core.ComponentFactories
 {

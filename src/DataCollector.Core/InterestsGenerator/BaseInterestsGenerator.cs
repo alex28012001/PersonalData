@@ -1,13 +1,13 @@
-﻿using DataCollector.Models.Entities;
+﻿using DataCollector.Common.Helpers;
+using DataCollector.Models.Entities;
+using DataCollector.Models.Interfaces;
+using DataCollector.Models.Settings;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
-using DataCollector.Common.Helpers;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DataCollector.Core.Settings;
-using DataCollector.Models.Interfaces;
 
 namespace DataCollector.Core.InterestsGenerator
 {
