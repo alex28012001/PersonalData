@@ -32,6 +32,7 @@ namespace DataCollector.Shell.ConsoleUI
             catch(Exception ex)
             {
                 _logger.Error(ex.Message, ex);
+                Environment.Exit(0);
             }
         }
 

@@ -33,7 +33,7 @@ namespace DataCollector.Core.ComponentFactories
         public IUserProvider CreateUserProvider()
         {
             var vkUserProvider = new VkUserProvider(_accessToken, new VkUserMapper());
-            var trottlingDecorator = new TrottlingDecorator(vkUserProvider, 333);
+            var trottlingDecorator = new TrottlingDecorator(vkUserProvider, 1500);
 
             return trottlingDecorator;
         }

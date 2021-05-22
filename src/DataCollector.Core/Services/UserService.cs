@@ -73,10 +73,12 @@ namespace DataCollector.Core.Services
                         users.Add(user);
                     }
 
-                    await _userRepository.BulkInsertAsync(users);
-
+                    if (users.Any())
+                    {
+                        await _userRepository.BulkInsertAsync(users);
+                        users.Clear();
+                    }
                     skip += sources.Count();
-                    users.Clear();
                 }
                 while (sources.Count() % _sourcesConfig.MaxGeneratedUsers == 0);
             }

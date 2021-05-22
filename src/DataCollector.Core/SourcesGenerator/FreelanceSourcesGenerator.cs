@@ -48,15 +48,13 @@ namespace DataCollector.Core.SourcesGenerator
                 var pageUrl = string.Format(UrlConstants.FreelancePageUrlTemplate, page);
                 var pageHtml = await HttpReader.ReadAsync(pageUrl);
                 var document = parser.ParseDocument(pageHtml);
-                htmlElements = document.QuerySelectorAll(".user_info .name a");
+                htmlElements = document.QuerySelectorAll(".user-info > a");
 
                 for (int i = skipedItems; i < htmlElements.Length; i++)
                 {
-                    var href = htmlElements[i].GetAttribute("href");
-                    var userUrl = string.Format(UrlConstants.FreelanceUserUrlTemplate, href);
-
                     if (urls.Count < count)
                     {
+                        var userUrl = htmlElements[i].GetAttribute("href");
                         urls.Add(userUrl);
                     }
                 }
